@@ -167,22 +167,43 @@ const BannerSlideshow = ({ products, events = [] }) => {
                   />
                 ) : (
                   <div style={{
-                    width: '350px',
-                    height: '350px',
-                    background: 'linear-gradient(135deg, #00BFA5, #3282B8)',
-                    borderRadius: '20px',
+                    width: '300px',
+                    height: '300px',
+                    borderRadius: '15px',
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    color: 'white',
                     textAlign: 'center',
-                    padding: '40px',
-                    boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3)'
+                    padding: '30px',
+                    boxShadow: '0 15px 30px rgba(0, 0, 0, 0.2)',
+                    backgroundImage: slide.image ? `url(${slide.image})` : 'linear-gradient(135deg, #00BFA5, #3282B8)',
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    color: 'white',
+                    position: 'relative'
                   }}>
-                    <div style={{ fontSize: '80px', marginBottom: '20px' }}>🎨</div>
-                    <h3 style={{ fontSize: '24px', marginBottom: '10px' }}>Exhibition</h3>
-                    <p style={{ fontSize: '16px' }}>{slide.date}</p>
+                    {!slide.image && (
+                      <>
+                        <div style={{ fontSize: '60px', marginBottom: '15px' }}>🎨</div>
+                        <h3 style={{ fontSize: '20px', marginBottom: '8px' }}>Exhibition</h3>
+                        <p style={{ fontSize: '14px' }}>{new Date(slide.date).toLocaleDateString()}</p>
+                      </>
+                    )}
+                    {slide.image && (
+                      <div style={{
+                        position: 'absolute',
+                        bottom: '15px',
+                        left: '15px',
+                        right: '15px',
+                        background: 'rgba(0,0,0,0.7)',
+                        padding: '12px',
+                        borderRadius: '8px'
+                      }}>
+                        <h3 style={{ fontSize: '16px', marginBottom: '4px', color: 'white' }}>Exhibition</h3>
+                        <p style={{ fontSize: '12px', color: 'white' }}>{new Date(slide.date).toLocaleDateString()}</p>
+                      </div>
+                    )}
                   </div>
                 )}
               </div>

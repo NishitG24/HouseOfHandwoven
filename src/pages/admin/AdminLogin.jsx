@@ -112,6 +112,7 @@ const AdminLogin = () => {
                 value={credentials.email}
                 onChange={handleChange}
                 required
+                placeholder="Enter your admin email"
                 style={{
                   width: '100%',
                   padding: '12px 12px 12px 44px',
@@ -149,6 +150,7 @@ const AdminLogin = () => {
                 value={credentials.password}
                 onChange={handleChange}
                 required
+                placeholder="Enter your password"
                 style={{
                   width: '100%',
                   padding: '12px 44px 12px 44px',
@@ -195,20 +197,6 @@ const AdminLogin = () => {
             {loading ? 'Signing in...' : 'Sign In'}
           </button>
         </form>
-
-        <div style={{
-          textAlign: 'center',
-          marginTop: '24px',
-          padding: '16px',
-          background: '#f8f9fa',
-          borderRadius: '8px',
-          fontSize: '14px',
-          color: '#6c757d'
-        }}>
-          <strong>Demo Credentials:</strong><br />
-          Email: admin@handwovenjewellery.com<br />
-          Password: admin123
-        </div>
       </div>
     </div>
   )

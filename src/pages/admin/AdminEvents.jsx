@@ -5,12 +5,15 @@ import { eventsAPI } from '../../services/api';
 const AdminEvents = () => {
   const [events, setEvents] = useState([]);
   const [showForm, setShowForm] = useState(false);
+  const [imageUploadType, setImageUploadType] = useState('url'); // 'url' or 'upload'
+  const [selectedFile, setSelectedFile] = useState(null);
   const [editingEvent, setEditingEvent] = useState(null);
   const [formData, setFormData] = useState({
     title: '',
     description: '',
     date: '',
-    location: ''
+    location: '',
+    image: ''
   });
 
   useEffect(() => {
@@ -23,6 +26,25 @@ const AdminEvents = () => {
       setEvents(response.data);
     } catch (error) {
       console.error('Error fetching events:', error);
+    }
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      // Check file size (limit to 2MB)
+      if (file.size > 2 * 1024 * 1024) {
+        alert('File size must be less than 2MB');
+        return;
+      }
+      
+      setSelectedFile(file);
+      // Create preview URL
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setFormData({ ...formData, image: e.target.result });
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -58,15 +80,18 @@ const AdminEvents = () => {
       title: event.title,
       description: event.description,
       date: event.date.split('T')[0],
-      location: event.location
+      location: event.location,
+      image: event.image || ''
     });
     setShowForm(true);
   };
 
   const resetForm = () => {
-    setFormData({ title: '', description: '', date: '', location: '' });
+    setFormData({ title: '', description: '', date: '', location: '', image: '' });
     setEditingEvent(null);
     setShowForm(false);
+    setSelectedFile(null);
+    setImageUploadType('url');
   };
 
   return (
@@ -175,7 +200,7 @@ const AdminEvents = () => {
                 />
               </div>
               
-              <div style={{ marginBottom: '20px' }}>
+              <div style={{ marginBottom: '15px' }}>
                 <label style={{ display: 'block', marginBottom: '5px', color: '#0F4C75', fontWeight: '500' }}>Location</label>
                 <input
                   type="text"
@@ -190,6 +215,93 @@ const AdminEvents = () => {
                     fontSize: '16px'
                   }}
                 />
+              </div>
+              
+              <div style={{ marginBottom: '15px' }}>
+                <label style={{ display: 'block', marginBottom: '5px', color: '#0F4C75', fontWeight: '500' }}>Event Image</label>
+                <div style={{ marginBottom: '10px' }}>
+                  <label style={{ marginRight: '20px', color: '#0F4C75', display: 'inline-flex', alignItems: 'center' }}>
+                    <input
+                      type="radio"
+                      value="url"
+                      checked={imageUploadType === 'url'}
+                      onChange={(e) => {
+                        setImageUploadType(e.target.value);
+                        if (selectedFile) setSelectedFile(null);
+                      }}
+                      style={{ marginRight: '5px' }}
+                    />
+                    Image URL
+                  </label>
+                  <label style={{ color: '#0F4C75', display: 'inline-flex', alignItems: 'center' }}>
+                    <input
+                      type="radio"
+                      value="upload"
+                      checked={imageUploadType === 'upload'}
+                      onChange={(e) => {
+                        setImageUploadType(e.target.value);
+                        setFormData({ ...formData, image: '' });
+                      }}
+                      style={{ marginRight: '5px' }}
+                    />
+                    Upload Image
+                  </label>
+                </div>
+                
+                {imageUploadType === 'url' ? (
+                  <input
+                    type="url"
+                    placeholder="Enter image URL"
+                    value={formData.image}
+                    onChange={(e) => setFormData({ ...formData, image: e.target.value })}
+                    style={{
+                      width: '100%',
+                      padding: '10px',
+                      border: '2px solid #BBE1FA',
+                      borderRadius: '6px',
+                      fontSize: '16px'
+                    }}
+                  />
+                ) : (
+                  <div>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleFileChange}
+                      style={{
+                        width: '100%',
+                        padding: '10px',
+                        border: '2px solid #BBE1FA',
+                        borderRadius: '6px',
+                        fontSize: '16px'
+                      }}
+                    />
+                    <p style={{ fontSize: '12px', color: '#666', marginTop: '5px' }}>
+                      Max file size: 2MB
+                    </p>
+                    {selectedFile && (
+                      <p style={{ marginTop: '5px', fontSize: '14px', color: '#3282B8' }}>
+                        Selected: {selectedFile.name}
+                      </p>
+                    )}
+                  </div>
+                )}
+                
+                {formData.image && (
+                  <div style={{ marginTop: '10px' }}>
+                    <img
+                      src={formData.image}
+                      alt="Preview"
+                      style={{
+                        width: '100px',
+                        height: '100px',
+                        objectFit: 'cover',
+                        borderRadius: '8px',
+                        border: '2px solid #BBE1FA'
+                      }}
+                    />
+                  </div>
+                )}
               </div>
               
               <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}>
@@ -239,7 +351,7 @@ const AdminEvents = () => {
             boxShadow: '0 4px 6px rgba(15, 76, 117, 0.1)'
           }}>
             <img
-              src={event.image || 'https://via.placeholder.com/300x200?text=Event'}
+              src={event.image || 'https://via.placeholder.com/300x200/0F4C75/white?text=Event+Image'}
               alt={event.title}
               style={{
                 width: '100%',

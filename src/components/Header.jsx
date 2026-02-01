@@ -30,7 +30,7 @@ const Header = () => {
           color: '#0F4C75', 
           textDecoration: 'none' 
         }}>
-          HandWoven Jewels
+          House of HandWoven Collection
         </Link>
 
         {/* Desktop Navigation */}
@@ -178,21 +178,23 @@ const Header = () => {
         </nav>
       )}
 
-      <style jsx>{`
-        @media (max-width: 768px) {
-          .desktop-nav {
-            display: none !important;
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          @media (max-width: 768px) {
+            .desktop-nav {
+              display: none !important;
+            }
+            .mobile-menu-btn {
+              display: block !important;
+            }
           }
-          .mobile-menu-btn {
-            display: block !important;
+          @media (min-width: 769px) {
+            .mobile-nav {
+              display: none !important;
+            }
           }
-        }
-        @media (min-width: 769px) {
-          .mobile-nav {
-            display: none !important;
-          }
-        }
-      `}</style>
+        `
+      }} />
     </header>
   )
 }

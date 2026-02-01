@@ -20,6 +20,10 @@ const eventSchema = new mongoose.Schema({
     required: true,
     trim: true
   },
+  image: {
+    type: String,
+    default: ''
+  },
   active: {
     type: Boolean,
     default: true

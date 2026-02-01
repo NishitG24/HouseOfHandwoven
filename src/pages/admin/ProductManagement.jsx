@@ -86,19 +86,31 @@ const ProductManagement = () => {
               Product Management
             </h1>
           </div>
-          <Link
-            to="/admin/products/new"
-            className="btn btn-primary"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              textDecoration: 'none'
-            }}
-          >
-            <Plus size={18} />
-            Add Product
-          </Link>
+          <div style={{ display: 'flex', gap: '12px' }}>
+            <Link to="/admin/events" style={{
+              background: '#28a745',
+              color: 'white',
+              padding: '8px 16px',
+              borderRadius: '6px',
+              textDecoration: 'none',
+              fontSize: '14px'
+            }}>
+              Manage Events
+            </Link>
+            <Link
+              to="/admin/products/new"
+              className="btn btn-primary"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                textDecoration: 'none'
+              }}
+            >
+              <Plus size={18} />
+              Add Product
+            </Link>
+          </div>
         </div>
       </header>
 

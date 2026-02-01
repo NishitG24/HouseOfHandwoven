@@ -131,7 +131,7 @@ ${formData.message}`
                       Phone
                     </h4>
                     <p style={{ color: '#7f8c8d', fontSize: '14px' }}>
-                      +91 {import.meta.env.VITE_WHATSAPP_NUMBER}
+                       {import.meta.env.VITE_WHATSAPP_NUMBER}
                     </p>
                   </div>
                 </div>

@@ -87,7 +87,7 @@ const ProductCard = ({ product }) => {
           display: 'flex', 
           justifyContent: 'space-between', 
           alignItems: 'center',
-          marginBottom: '16px'
+          marginBottom: '12px'
         }}>
           <span style={{ 
             fontSize: '20px', 
@@ -108,8 +108,24 @@ const ProductCard = ({ product }) => {
           </span>
         </div>
 
+        <div style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginBottom: '12px',
+          fontSize: '14px'
+        }}>
+          <span style={{ color: (product.quantity || 0) > 0 ? '#28a745' : '#dc3545', fontWeight: '500' }}>
+            {(product.quantity || 0) > 0 ? `${product.quantity || 0} in stock` : 'Out of stock'}
+          </span>
+          <span style={{ color: (product.quantity || 0) > 0 ? '#28a745' : '#dc3545' }}>
+            {(product.quantity || 0) > 0 ? '✓ Available' : '✗ Unavailable'}
+          </span>
+        </div>
+
         <button 
           onClick={handleAddToCart}
+          disabled={(product.quantity || 0) === 0}
           className="btn btn-primary"
           style={{ 
             width: '100%',
@@ -117,11 +133,13 @@ const ProductCard = ({ product }) => {
             alignItems: 'center',
             justifyContent: 'center',
             gap: '8px',
-            fontSize: '14px'
+            fontSize: '14px',
+            opacity: (product.quantity || 0) === 0 ? 0.5 : 1,
+            cursor: (product.quantity || 0) === 0 ? 'not-allowed' : 'pointer'
           }}
         >
           <ShoppingCart size={16} />
-          Add to Cart
+          {(product.quantity || 0) === 0 ? 'Out of Stock' : 'Add to Cart'}
         </button>
       </div>
     </div>

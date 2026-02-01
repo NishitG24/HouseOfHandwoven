@@ -124,7 +124,7 @@ const Footer = () => {
             }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <Phone size={16} />
-                <span>+91 {import.meta.env.VITE_WHATSAPP_NUMBER}</span>
+                <span>{import.meta.env.VITE_WHATSAPP_NUMBER}</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <Instagram size={16} />

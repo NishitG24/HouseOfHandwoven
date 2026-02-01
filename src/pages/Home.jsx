@@ -48,7 +48,7 @@ const Home = () => {
       <section style={{ 
         background: 'linear-gradient(135deg, rgba(15, 76, 117, 0.9) 0%, rgba(50, 130, 184, 0.8) 100%), url("data:image/svg+xml,%3Csvg width=\\"60\\" height=\\"60\\" viewBox=\\"0 0 60 60\\" xmlns=\\"http://www.w3.org/2000/svg\\"%3E%3Cg fill=\\"none\\" fill-rule=\\"evenodd\\"%3E%3Cg fill=\\"%2300BFA5\\" fill-opacity=\\"0.1\\"%3E%3Cpath d=\\"M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
         color: 'white',
-        padding: '120px 0',
+        padding: 'clamp(60px, 15vw, 120px) 0',
         textAlign: 'center',
         position: 'relative',
         overflow: 'hidden'
@@ -80,7 +80,7 @@ const Home = () => {
           </div>
           
           <h1 style={{ 
-            fontSize: '56px', 
+            fontSize: 'clamp(32px, 8vw, 56px)', 
             fontWeight: 'bold', 
             marginBottom: '24px',
             lineHeight: '1.2',
@@ -89,23 +89,24 @@ const Home = () => {
           }}>
             House of HandWoven
             <br />
-            <span style={{ color: '#00BFA5' }}>Jewellery Collection</span>
+            <span style={{ color: '#00BFA5' }}>Collection</span>
           </h1>
           
           <p style={{ 
-            fontSize: '22px', 
+            fontSize: 'clamp(16px, 4vw, 22px)', 
             marginBottom: '40px', 
             opacity: '0.95',
             maxWidth: '700px',
             margin: '0 auto 40px',
             lineHeight: '1.6',
-            fontStyle: 'italic'
+            fontStyle: 'italic',
+            padding: '0 20px'
           }}>
             Where tradition meets artistry. Each piece tells a story of skilled hands, 
             cultural heritage, and timeless beauty crafted just for you.
           </p>
           
-          <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
+          <div className="hero-buttons" style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link 
               to="/products" 
               style={{
@@ -152,12 +153,14 @@ const Home = () => {
           </div>
         </div>
         
-        <style jsx>{`
-          @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
-          }
-        `}</style>
+        <style dangerouslySetInnerHTML={{
+          __html: `
+            @keyframes float {
+              0%, 100% { transform: translateY(0px) rotate(0deg); }
+              50% { transform: translateY(-20px) rotate(180deg); }
+            }
+          `
+        }} />
       </section>
 
       {/* Events & Exhibitions Section */}

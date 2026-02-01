@@ -5,12 +5,13 @@ const CartContext = createContext()
 const cartReducer = (state, action) => {
   switch (action.type) {
     case 'ADD_TO_CART':
-      const existingItem = state.items.find(item => item.id === action.payload.id)
+      const productId = action.payload._id || action.payload.id
+      const existingItem = state.items.find(item => (item._id || item.id) === productId)
       if (existingItem) {
         return {
           ...state,
           items: state.items.map(item =>
-            item.id === action.payload.id
+            (item._id || item.id) === productId
               ? { ...item, quantity: item.quantity + 1 }
               : item
           )
@@ -52,6 +53,15 @@ export const CartProvider = ({ children }) => {
   const [state, dispatch] = useReducer(cartReducer, { items: [] })
 
   const addToCart = (product) => {
+    const productId = product._id || product.id
+    const existingItem = state.items.find(item => (item._id || item.id) === productId)
+    const currentQuantity = existingItem ? existingItem.quantity : 0
+    
+    if (currentQuantity >= (product.quantity || 0)) {
+      alert(`Sorry, only ${product.quantity || 0} items available in stock`)
+      return
+    }
+    
     dispatch({ type: 'ADD_TO_CART', payload: product })
   }
 
@@ -59,9 +69,11 @@ export const CartProvider = ({ children }) => {
     dispatch({ type: 'REMOVE_FROM_CART', payload: productId })
   }
 
-  const updateQuantity = (productId, quantity) => {
+  const updateQuantity = (productId, quantity, maxQuantity) => {
     if (quantity <= 0) {
       removeFromCart(productId)
+    } else if (quantity > maxQuantity) {
+      alert(`Sorry, only ${maxQuantity} items available in stock`)
     } else {
       dispatch({ type: 'UPDATE_QUANTITY', payload: { id: productId, quantity } })
     }

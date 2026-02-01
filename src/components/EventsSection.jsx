@@ -107,6 +107,26 @@ const EventsSection = () => {
                 overflow: 'hidden'
               }}
             >
+              {event.image && (
+                <div style={{
+                  width: '100%',
+                  height: '180px',
+                  marginBottom: '16px',
+                  borderRadius: '10px',
+                  overflow: 'hidden'
+                }}>
+                  <img
+                    src={event.image}
+                    alt={event.title}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover'
+                    }}
+                  />
+                </div>
+              )}
+              
               <div style={{
                 position: 'absolute',
                 top: '20px',
@@ -122,12 +142,14 @@ const EventsSection = () => {
                 Exhibition
               </div>
 
-              <div style={{
-                fontSize: '48px',
-                marginBottom: '20px'
-              }}>
-                {getEventIcon(event.type)}
-              </div>
+              {!event.image && (
+                <div style={{
+                  fontSize: '48px',
+                  marginBottom: '20px'
+                }}>
+                  {getEventIcon(event.type)}
+                </div>
+              )}
 
               <h3 style={{
                 fontSize: '24px',
@@ -148,18 +170,7 @@ const EventsSection = () => {
                   color: '#0F4C75'
                 }}>
                   <Calendar size={16} color={getEventColor(event.type)} />
-                  <span style={{ fontSize: '14px', fontWeight: '500' }}>{event.date}</span>
-                </div>
-                
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '12px',
-                  marginBottom: '8px',
-                  color: '#0F4C75'
-                }}>
-                  <Clock size={16} color={getEventColor(event.type)} />
-                  <span style={{ fontSize: '14px', fontWeight: '500' }}>{event.time}</span>
+                  <span style={{ fontSize: '14px', fontWeight: '500' }}>{new Date(event.date).toLocaleDateString()}</span>
                 </div>
                 
                 <div style={{
