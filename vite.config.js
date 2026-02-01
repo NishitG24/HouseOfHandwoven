@@ -14,7 +14,8 @@ export default defineConfig({
       output: {
         manualChunks: undefined
       }
-    }
+    },
+    copyPublicDir: true
   },
   base: '/'
 })
