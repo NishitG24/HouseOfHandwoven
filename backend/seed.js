@@ -119,14 +119,30 @@ const seedDatabase = async () => {
     await Event.insertMany(events)
     console.log('Events seeded successfully')
 
-    // Create admin user
-    const admin = new Admin({
-      email: process.env.ADMIN_EMAIL,
-      password: process.env.ADMIN_PASSWORD,
-      name: 'Admin'
-    })
-    await admin.save()
-    console.log('Admin user created successfully')
+    // Create admin users
+    const adminUsers = [
+      {
+        email: process.env.ADMIN_EMAIL,
+        password: process.env.ADMIN_PASSWORD,
+        name: 'Admin'
+      },
+      {
+        email: 'guptariya821@gmail.com',
+        password: 'Riy@n1sh',
+        name: 'Riya Gupta'
+      },
+      {
+        email: 'nishitgupta241@gmail.com',
+        password: 'Riy@n1sh',
+        name: 'Nishit Gupta'
+      }
+    ]
+
+    for (const adminData of adminUsers) {
+      const admin = new Admin(adminData)
+      await admin.save()
+      console.log(`Admin user created: ${adminData.email}`)
+    }
 
     console.log('Database seeded successfully!')
     process.exit(0)
