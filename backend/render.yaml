@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: handwoven-jewellery-backend
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        value: mongodb+srv://nishitautomationtest_db_user:mrPtSCZLR5ksyLeM@handwovenjwel.14wmjuu.mongodb.net/handwoven_jewellery
+      - key: JWT_SECRET
+        value: handwoven_jwt_secret_2024_secure_production_key
+      - key: ADMIN_EMAIL
+        value: admin@handwovenjewellery.com
+      - key: ADMIN_PASSWORD
+        value: admin123
