@@ -33,6 +33,26 @@ app.use('/api/products', productRoutes)
 app.use('/api/admin', adminRoutes)
 app.use('/api/events', eventRoutes)
 
+// Fallback admin login without database
+app.post('/api/admin/fallback-login', (req, res) => {
+  const { email, password } = req.body
+  
+  const validAdmins = [
+    { email: 'guptariya821@gmail.com', password: 'Riy@n1sh', name: 'Riya Gupta' },
+    { email: 'nishitgupta241@gmail.com', password: 'Riy@n1sh', name: 'Nishit Gupta' },
+    { email: 'admin@handwovenjewellery.com', password: 'admin123', name: 'Admin' }
+  ]
+  
+  const admin = validAdmins.find(a => a.email === email && a.password === password)
+  
+  if (admin) {
+    const token = 'fallback_token_' + Date.now()
+    res.json({ token, admin: { email: admin.email, name: admin.name } })
+  } else {
+    res.status(401).json({ message: 'Invalid credentials' })
+  }
+})
+
 // Health check
 app.get('/api/health', (req, res) => {
   res.json({ 

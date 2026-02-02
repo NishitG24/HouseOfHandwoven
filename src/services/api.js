@@ -30,7 +30,14 @@ export const productsAPI = {
 
 // Admin API
 export const adminAPI = {
-  login: (credentials) => api.post('/admin/login', credentials),
+  login: async (credentials) => {
+    try {
+      return await api.post('/admin/login', credentials)
+    } catch (error) {
+      // Fallback to non-database login
+      return await api.post('/admin/fallback-login', credentials)
+    }
+  },
   setup: () => api.post('/admin/setup'),
   getDashboard: () => api.get('/admin/dashboard'),
   verify: () => api.get('/admin/verify')
