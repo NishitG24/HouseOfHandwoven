@@ -30,7 +30,7 @@ export const productsAPI = {
 
 // Admin API
 export const adminAPI = {
-  login: (credentials) => api.post('/admin/fallback-login', credentials),
+  login: (credentials) => api.post('/test-login', credentials),
   setup: () => api.post('/admin/setup'),
   getDashboard: () => api.get('/admin/dashboard'),
   verify: () => api.get('/admin/verify')

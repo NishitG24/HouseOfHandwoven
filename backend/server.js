@@ -58,6 +58,31 @@ app.get('/api/health', (req, res) => {
   })
 })
 
+// Simple test login endpoint
+app.all('/api/test-login', (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
+  
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end()
+  }
+  
+  const { email, password } = req.body || {}
+  
+  if (email === 'guptariya821@gmail.com' && password === 'Riy@n1sh') {
+    return res.json({ token: 'test_token_123', admin: { email, name: 'Riya Gupta' } })
+  }
+  if (email === 'nishitgupta241@gmail.com' && password === 'Riy@n1sh') {
+    return res.json({ token: 'test_token_456', admin: { email, name: 'Nishit Gupta' } })
+  }
+  if (email === 'admin@handwovenjewellery.com' && password === 'admin123') {
+    return res.json({ token: 'test_token_789', admin: { email, name: 'Admin' } })
+  }
+  
+  res.status(401).json({ message: 'Invalid credentials' })
+})
+
 // Seed endpoint for production
 app.get('/api/seed', async (req, res) => {
   try {
