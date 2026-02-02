@@ -35,7 +35,41 @@ app.use('/api/events', eventRoutes)
 
 // Health check
 app.get('/api/health', (req, res) => {
-  res.json({ message: 'HandWoven Jewellery API is running!' })
+  res.json({ 
+    message: 'HandWoven Jewellery API is running!',
+    mongoUri: process.env.MONGODB_URI ? 'Set' : 'Not set',
+    nodeEnv: process.env.NODE_ENV
+  })
+})
+
+// Seed endpoint for production
+app.get('/api/seed', async (req, res) => {
+  try {
+    const { default: Product } = await import('./models/Product.js')
+    const { default: Admin } = await import('./models/Admin.js')
+    const { default: Event } = await import('./models/Event.js')
+    
+    // Clear existing data
+    await Product.deleteMany({})
+    await Admin.deleteMany({})
+    await Event.deleteMany({})
+    
+    // Create admin users
+    const adminUsers = [
+      { email: 'admin@handwovenjewellery.com', password: 'admin123', name: 'Admin' },
+      { email: 'guptariya821@gmail.com', password: 'Riy@n1sh', name: 'Riya Gupta' },
+      { email: 'nishitgupta241@gmail.com', password: 'Riy@n1sh', name: 'Nishit Gupta' }
+    ]
+    
+    for (const adminData of adminUsers) {
+      const admin = new Admin(adminData)
+      await admin.save()
+    }
+    
+    res.json({ message: 'Database seeded successfully!' })
+  } catch (error) {
+    res.status(500).json({ error: error.message })
+  }
 })
 
 // MongoDB Connection
