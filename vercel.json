@@ -1,4 +1,5 @@
 {
+  "name": "house-of-handwoven",
   "rewrites": [
     {
       "source": "/(.*)",
