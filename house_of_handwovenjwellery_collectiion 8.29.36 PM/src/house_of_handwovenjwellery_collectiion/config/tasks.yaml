@@ -1,0 +1,55 @@
+analysis_task:
+  description: >
+    Take the following user requirement: "{requirement}". 
+    Analyze it for technical feasibility in a MERN stack (React, MongoDB, Node.js) environment.
+    Identify the necessary data models, API endpoints, and UI components.
+    Create a detailed implementation roadmap.
+  expected_output: >
+    A comprehensive markdown document outlining the project architecture, 
+    user stories, and a checklist of technical requirements.
+  agent: business_analyst
+  output_file: project_output/architecture_plan.md
+
+database_design_task:
+  description: >
+    Based on the architecture_plan.md, design the MongoDB schema.
+    Define the collections, field types, and relationships (one-to-many, etc.).
+    Ensure the design is optimized for a React-based ecommerce frontend.
+  expected_output: >
+    A valid Mongoose schema file (JavaScript) containing the model definitions.
+  agent: database_engineer
+  context: [analysis_task]
+  output_file: project_output/models.js
+
+backend_development_task:
+  description: >
+    Develop the Express.js backend logic for "{requirement}". 
+    Create the necessary API routes (GET, POST, etc.) and connect them to the 
+    Mongoose models defined in models.js. Implement basic error handling.
+  expected_output: >
+    A functional Node.js/Express server file including all required routes.
+  agent: backend_developer
+  context: [analysis_task, database_design_task]
+  output_file: project_output/server.js
+
+frontend_development_task:
+  description: >
+    Build the React components for "{requirement}" using Tailwind CSS utility classes.
+    The code should include the UI layout and the 'fetch' logic to communicate 
+    with the backend API defined in server.js.
+  expected_output: >
+    A complete React component file (.jsx) that is ready to be used in a Vite project.
+  agent: full_stack_developer
+  context: [analysis_task, backend_development_task]
+  output_file: project_output/App.jsx
+
+quality_assurance_task:
+  description: >
+    Review the generated code in server.js and App.jsx. 
+    Compare the implementation against the original requirement: "{requirement}".
+    Check for syntax errors, missing imports, or logic gaps in the code.
+  expected_output: >
+    A QA report in markdown format listing any bugs found or confirming the code is 'STABLE'.
+  agent: qa_engineer
+  context: [backend_development_task, frontend_development_task]
+  output_file: project_output/qa_report.md

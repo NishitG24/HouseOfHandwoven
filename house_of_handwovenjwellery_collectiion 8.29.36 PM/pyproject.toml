@@ -1,0 +1,24 @@
+[project]
+name = "house_of_handwovenjwellery_collectiion"
+version = "0.1.0"
+description = "House_of_HandWovenJwellery_Collectiion using crewAI"
+authors = [{ name = "Your Name", email = "you@example.com" }]
+requires-python = ">=3.10,<3.14"
+dependencies = [
+    "crewai[tools]==1.7.2"
+]
+
+[project.scripts]
+house_of_handwovenjwellery_collectiion = "house_of_handwovenjwellery_collectiion.main:run"
+run_crew = "house_of_handwovenjwellery_collectiion.main:run"
+train = "house_of_handwovenjwellery_collectiion.main:train"
+replay = "house_of_handwovenjwellery_collectiion.main:replay"
+test = "house_of_handwovenjwellery_collectiion.main:test"
+run_with_trigger = "house_of_handwovenjwellery_collectiion.main:run_with_trigger"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.crewai]
+type = "crew"
